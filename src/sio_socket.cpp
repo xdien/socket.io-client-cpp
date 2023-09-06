@@ -133,7 +133,7 @@ namespace sio
         
         void close();
         
-        void emit(std::string const& name, message::list const& msglist, std::function<void (message::list const&)> const& ack);
+        void emit_(std::string const& name, message::list const& msglist, std::function<void (message::list const&)> const& ack);
         
         std::string const& get_namespace() const {return m_nsp;}
         
@@ -247,7 +247,7 @@ namespace sio
     
     unsigned int socket::impl::s_global_event_id = 1;
     
-    void socket::impl::emit(std::string const& name, message::list const& msglist, std::function<void (message::list const&)> const& ack)
+    void socket::impl::emit_(std::string const& name, message::list const& msglist, std::function<void (message::list const&)> const& ack)
     {
         NULL_GUARD(m_client);
         message::ptr msg_ptr = msglist.to_array_message(name);
@@ -572,9 +572,9 @@ namespace sio
         m_impl->off_error();
     }
 
-    void socket::emit(std::string const& name, message::list const& msglist, std::function<void (message::list const&)> const& ack)
+    void socket::emit_(std::string const& name, message::list const& msglist, std::function<void (message::list const&)> const& ack)
     {
-        m_impl->emit(name, msglist,ack);
+        m_impl->emit_(name, msglist,ack);
     }
     
     std::string const& socket::get_namespace() const
